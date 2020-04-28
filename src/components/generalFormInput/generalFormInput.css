@@ -1,0 +1,12 @@
+.generalFormInput {
+    box-shadow: 0 2px 3px rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.1);
+    padding: 1%;
+}
+
+.generalFormInputChosen {
+    border-left: 5px solid #191970;
+}
+
+.generalFormInputInvalid {
+    border-bottom: 5px solid red;
+}

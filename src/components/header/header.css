@@ -1,0 +1,59 @@
+
+
+.navbar-container a {
+	outline: none;
+}
+
+.navbar-container {
+	text-align: center;
+	font-size: 0;
+}
+
+.navbar-container ul {
+	margin: 0;
+	padding: 0;
+	text-align: right;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.navbar-container ul li {
+	display: inline-block;
+	font-size: 16px;
+}
+
+.navbar-container ul li a {
+	color: #484848;
+	text-decoration: none;
+	display: inline-block;	
+	padding: 10px;
+	transition: color 0.5s;
+}
+
+.navbar-container ul li .underline {
+	height: 3px;
+	background-color: #484848;
+	width: 0%;
+	transition: width 0.2s, background-color 0.5s;
+	margin: 0 auto;
+}
+
+.navbar-container ul li.active-link .underline {
+	width: 100%;
+	background-color: #484848;
+}
+
+.navbar-container ul li:hover .underline {
+	background-color: #484848;
+	width: 100%;
+}
+
+.navbar-container ul li:active a {
+	transition: none;
+	color: #777777;
+}
+
+.navbar-container ul li:active .underline {
+	transition: none;
+	background-color: rgba(255,255,255,0.76);
+}
