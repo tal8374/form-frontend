@@ -3,3 +3,10 @@ npm start
 
 Live demo:
 https://form-frontend-tal8374.herokuapp.com/
+
+Todo:
+* Connect backend + frontned to one server.
+* Remove to react hooks
+* Use semantic UI syle
+* Add similar feature as google forms
+* Remove using the class
