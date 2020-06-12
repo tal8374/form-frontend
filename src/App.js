@@ -1,17 +1,14 @@
 import React, { Component } from 'react';
-import {
-  BrowserRouter,
-  Switch,
-  Route,
-  Redirect
-} from "react-router-dom";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 
 import './App.css';
 import FormListPage from './containers/formListPage/formListPage';
 import FormBuilderPage from './containers/formBuilderPage/formBuilderPage';
 import FormSubmitPage from './containers/formSubmitPage/formSubmitPage';
 import FormSubmissionsPage from './containers/formSubmissionsPage/formSubmissionsPage';
-import Header from './components/header/header';
+import Header from './components/Header/Header';
+
+import FormList from './pages/FormList/FormList';
 
 class App extends Component {
   render() {
@@ -23,7 +20,7 @@ class App extends Component {
           <div className="appContainer container">
             <Switch>
               <Route path="/form-list">
-                <FormListPage></FormListPage>
+                <FormList/>
               </Route>
               <Route path="/form-build">
                 <FormBuilderPage></FormBuilderPage>
