@@ -10,3 +10,4 @@ Todo:
 * Use semantic UI syle
 * Add similar feature as google forms
 * Remove using the class
+* use useQuery for fetching data. Use suspense inorder to not to show data which is still rendering.
