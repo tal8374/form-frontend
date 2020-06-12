@@ -1,61 +1,30 @@
-import React from 'react';
-import { NavLink, withRouter  } from 'react-router-dom';
+import React, { useState } from 'react';
+import { NavLink, withRouter } from 'react-router-dom';
+import { Menu } from 'semantic-ui-react'
 import PropTypes from 'prop-types';
-import './header.css'
 
-class Header extends React.Component {
+const Header = (props) => {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            options: [
-                {
-                    name: 'formList',
-                    text: 'Form List',
-                    url: '',
-                    path: '/form-list',
-                    isChosen: window.location.pathname === '/form-list' ? true : false
-                },
-                {
-                    name: 'createForm',
-                    text: 'Create Form',
-                    url: '',
-                    path: '/form-build',
-                    isChosen: window.location.pathname === '/form-build' ? true : false
-                }
-            ]
-        }
-    }
+    const [activeItem, setActiveItem] = useState(props.location.pathname);
 
-    moveTo() {
-        this.setState({
-            ...this.state,
-        });
-    }
-
-    render() {
-        const pathname = this.props.location.pathname
-        return (
-            <div className="navbar-container">
-                <ul>
-                    {
-                        this.state.options.map(option => {
-                            let className = ['nav-link'];
-                            if (option.path === pathname)
-                                className.push('active-link');
-                            return (
-                                <li className={className.join(' ')}>
-                                    <a ><NavLink to={option.path}>{option.text}</NavLink></a>
-                                    <div className="underline"></div>
-                                </li>
-                            )
-                        })
-                    }
-                </ul>
-            </div>
-        )
-    }
-
+    return (
+        <div className="container" style={{ width: '40%' }}>
+            <Menu pointing widths={2} secondary size='huge'>
+                <Menu.Item
+                    name='Form List'
+                    active={activeItem === '/form-list'}
+                    onClick={() => setActiveItem('/form-list')}
+                    as={NavLink} exact to="/form-list"
+                />
+                <Menu.Item
+                    name='Create Form'
+                    active={activeItem === '/form-build'}
+                    onClick={() => setActiveItem('/form-build')}
+                    as={NavLink} exact to="/form-build"
+                />
+            </Menu>
+        </div>
+    )
 }
 
 Header.contextTypes = {
