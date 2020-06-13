@@ -21,7 +21,7 @@ const submithForm = async (payload) => {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(payload.formBody)
+        body: JSON.stringify({formSubmission: payload.formBody})
     })
     const data = await response.json();
     return data;
@@ -76,9 +76,9 @@ const FormSubmit = (props) => {
 
                     <Form onSubmit={handleSubmit}>
                         {
-                            data.formInputs.map(formInput => {
+                            data.formInputs.map((formInput, i) => {
                                 return (
-                                    <Form.Group widths='equal'>
+                                    <Form.Group widths='equal' key={i}>
                                         <GeneralFormInput
                                             inputType={formInput.inputType}
                                             value={formValues[formInput.inputName]}

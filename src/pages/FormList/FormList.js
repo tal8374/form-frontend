@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import { NavLink } from 'react-router-dom';
 
@@ -15,7 +15,11 @@ const fetchForms = async () => {
 
 const FormList = () => {
 
-    const { data, error, isFetching } = useQuery('fetchForms', fetchForms);
+    const { data, error, isFetching, refetch } = useQuery('fetchForms', fetchForms, { manual: true });
+
+    useEffect(() => {
+        refetch();
+    }, []);
 
     return (
         <React.Fragment>
@@ -44,7 +48,7 @@ const FormList = () => {
                         {
                             data && data.map(form => {
                                 return (
-                                    <Table.Row>
+                                    <Table.Row key={form._id}>
                                         <Table.Cell>
                                             <Label ribbon>{form._id}</Label>
                                         </Table.Cell>
