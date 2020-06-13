@@ -2,10 +2,6 @@ import React, { Component } from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 
 import './App.css';
-import FormListPage from './containers/formListPage/formListPage';
-// import FormBuilderPage from './containers/formBuilderPage/formBuilderPage';
-// import FormSubmitPage from './containers/formSubmitPage/formSubmitPage';
-// import FormSubmissionsPage from './containers/formSubmissionsPage/formSubmissionsPage';
 import Header from './components/Header/Header';
 
 import FormList from './pages/FormList/FormList';
@@ -30,7 +26,6 @@ class App extends Component {
               </Route>
               <Route path="/form-submit/:formId" render={(props) => <FormSubmit {...props} />}></Route>
               <Route path="/submission-page/:formId" render={(props) => <FormSubmissions {...props} />}></Route>
-              {/* <Route path="/submission-page/:formId" render={(props) => <FormSubmissionsPage {...props} />}></Route> */}
               <Redirect to="/form-list" />
             </Switch>
           </div>
