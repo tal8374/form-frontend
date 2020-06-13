@@ -6,3 +6,5 @@ Todo:
 * Show tempates of forms
 * Adding the option to remove an input
 * Adding the option to change position of input by dragging it.
+* Adding lazy loading between different routes (https://reactjs.org/docs/code-splitting.html)
+* After adding users registration to the app, splitting the app to two parts - the first one is responsible for unregistered users and the whole app for the registered.
