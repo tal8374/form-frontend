@@ -13,7 +13,7 @@ import inputEnums from '../../shared/enums';
 const getFormNameInput = () => {
     return {
         _id: uuidv4(),
-        inputType: inputEnums.FORM_NAME,
+        inputType: inputEnums.TEXT,
         value: 'Form Name',
         label: 'Form Name',
         inputName: 'formName',

@@ -5,5 +5,4 @@ export default Object.freeze({
     'DATE': 'date',
     'TEL': 'tel',
     'NUMBER': 'number',
-    'FORM_NAME': 'formName',
 });

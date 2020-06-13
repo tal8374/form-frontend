@@ -1,7 +1,6 @@
 import React from 'react';
 
 import RawInput from './RawInput/RawInput.js'
-import FormInput from './FormInput/FormInput.js'
 
 import inputEnums from '../../shared/enums';
 
@@ -16,9 +15,6 @@ const GeneralFormInput = (props) => {
 
         case inputEnums.COLOR:
             return <RawInput {...props} defaultValue={'#ffffff'} />
-
-        case inputEnums.FORM_NAME:
-            return <FormInput {...props} />
 
         default:
             return <div>default</div>
