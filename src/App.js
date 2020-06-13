@@ -11,6 +11,7 @@ import Header from './components/Header/Header';
 import FormList from './pages/FormList/FormList';
 import FormSubmit from './pages/FormSubmit/FormSubmit';
 import FormSubmissions from './pages/FormSubmissions/FormSubmissions';
+import FormBuilder from './pages/FormBuilder/FormBuilder';
 
 class App extends Component {
   render() {
@@ -22,11 +23,11 @@ class App extends Component {
           <div className="appContainer container">
             <Switch>
               <Route path="/form-list">
-                <FormList/>
+                <FormList />
               </Route>
-              {/* <Route path="/form-build">
-                <FormBuilderPage></FormBuilderPage>
-              </Route> */}
+              <Route path="/form-build">
+                <FormBuilder></FormBuilder>
+              </Route>
               <Route path="/form-submit/:formId" render={(props) => <FormSubmit {...props} />}></Route>
               <Route path="/submission-page/:formId" render={(props) => <FormSubmissions {...props} />}></Route>
               {/* <Route path="/submission-page/:formId" render={(props) => <FormSubmissionsPage {...props} />}></Route> */}

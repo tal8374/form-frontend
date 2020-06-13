@@ -21,7 +21,7 @@ const submithForm = async (payload) => {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({formSubmission: payload.formBody})
+        body: JSON.stringify({ formSubmission: payload.formBody })
     })
     const data = await response.json();
     return data;
@@ -86,6 +86,7 @@ const FormSubmit = (props) => {
                                             label={formInput.label}
                                             inputName={formInput.inputName}
                                             readOnly={false}
+                                            required={true}
                                         />
                                     </Form.Group>
                                 )
@@ -96,7 +97,9 @@ const FormSubmit = (props) => {
                             fluid
                             color='green'
                             style={{ marginBottom: '2vh' }}
-                        >Submit</Button>
+                        >
+                            Submit
+                        </Button>
                     </Form>
                 </React.Fragment>
             }

@@ -14,7 +14,7 @@ const fetchSubmissions = async (formId) => {
 
 const FormSubmissions = (props) => {
 
-    const { data, error, isFetching, refetch } = useQuery(props.match.params.formId, fetchSubmissions);
+    const { data, error, isFetching } = useQuery(props.match.params.formId, fetchSubmissions);
 
     return (
         <React.Fragment>
@@ -40,7 +40,7 @@ const FormSubmissions = (props) => {
 
                         <Table.Body>
                             {
-                                data && data.formSubmissions.filter(x => x.length > 1).map((submission, i) => {
+                                data && data.formSubmissions.map((submission, i) => {
                                     return (
                                         <Table.Row key={i}>
                                             {

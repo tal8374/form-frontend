@@ -2,25 +2,68 @@ import React, { useEffect } from 'react'
 
 import { Form, Input } from 'semantic-ui-react'
 
-const TextInput = (props) => {
+import inputEnums from '../../../shared/enums';
+
+const RawInput = (props) => {
 
     useEffect(() => {
         if (props.defaultValue != null)
             props.onChangeValue(props.defaultValue)
     }, []);
 
-    return (
-        <Form.Field
-            required
-            type={props.inputType}
-            control={Input}
-            label={props.label}
-            name={props.inputName}
-            value={props.value || props.defaultValue || ''}
-            onChange={(event) => props.onChangeValue(event.target.value)}
-            readOnly={props.readOnly}
-        />
-    )
+    const getValue = () => {
+        return props.value || props.defaultValue || '';
+    }
+
+    if (props.isEdible == true) {
+        return (
+            <React.Fragment>
+                <Form.Field
+                    required={true}
+                    type={inputEnums.TEXT}
+                    control={Input}
+                    label={'Field Label'}
+                    name={'label'}
+                    value={props.label}
+                    onChange={(event) => props.onChangeEdit(event.target.name, event.target.value)}
+                    readOnly={false}
+                />
+                <Form.Field
+                    required={true}
+                    type={inputEnums.TEXT}
+                    control={Input}
+                    label={'input name'}
+                    name={'inputName'}
+                    value={props.inputName}
+                    onChange={(event) => props.onChangeEdit(event.target.name, event.target.value)}
+                    readOnly={false}
+                />
+                <Form.Field
+                    required={true}
+                    label='Input Type'
+                    control='select'
+                    name={'inputType'}
+                    onChange={(event) => props.onChangeEdit(event.target.name, event.target.value)}
+                    value={props.inputType}
+                >
+                    {Object.values(inputEnums).map(inputEnum => { return <option value={inputEnum}>{inputEnum}</option> })}
+                </Form.Field>
+            </React.Fragment>
+        );
+    } else {
+        return (
+            <Form.Field
+                required={props.required}
+                type={props.inputType}
+                control={Input}
+                label={props.label}
+                name={props.inputName}
+                value={getValue()}
+                onChange={(event) => props.onChangeValue(event.target.value)}
+                readOnly={props.readOnly}
+            />
+        )
+    }
 }
 
-export default TextInput;
+export default RawInput;
