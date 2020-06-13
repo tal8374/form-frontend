@@ -2,10 +2,9 @@ import React from 'react';
 
 import { NavLink } from 'react-router-dom';
 
-import { Loader } from 'semantic-ui-react'
 import { BACKEND_URL } from '../../utils/settings'
 
-import { Label, Table, Message } from 'semantic-ui-react'
+import { Label, Table, Message, Loader } from 'semantic-ui-react'
 import { useQuery } from "react-query";
 
 const fetchForms = async () => {
@@ -29,7 +28,8 @@ const FormList = () => {
             {isFetching && <Loader active inline='centered' />}
 
             {
-                !isFetching && <Table celled>
+                !isFetching &&
+                <Table celled>
                     <Table.Header>
                         <Table.Row>
                             <Table.HeaderCell>Form Id</Table.HeaderCell>
@@ -43,7 +43,6 @@ const FormList = () => {
                     <Table.Body>
                         {
                             data && data.map(form => {
-                                console.log(form)
                                 return (
                                     <Table.Row>
                                         <Table.Cell>

@@ -3,12 +3,14 @@ import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 
 import './App.css';
 import FormListPage from './containers/formListPage/formListPage';
-import FormBuilderPage from './containers/formBuilderPage/formBuilderPage';
-import FormSubmitPage from './containers/formSubmitPage/formSubmitPage';
-import FormSubmissionsPage from './containers/formSubmissionsPage/formSubmissionsPage';
+// import FormBuilderPage from './containers/formBuilderPage/formBuilderPage';
+// import FormSubmitPage from './containers/formSubmitPage/formSubmitPage';
+// import FormSubmissionsPage from './containers/formSubmissionsPage/formSubmissionsPage';
 import Header from './components/Header/Header';
 
 import FormList from './pages/FormList/FormList';
+import FormSubmit from './pages/FormSubmit/FormSubmit';
+import FormSubmissions from './pages/FormSubmissions/FormSubmissions';
 
 class App extends Component {
   render() {
@@ -22,11 +24,12 @@ class App extends Component {
               <Route path="/form-list">
                 <FormList/>
               </Route>
-              <Route path="/form-build">
+              {/* <Route path="/form-build">
                 <FormBuilderPage></FormBuilderPage>
-              </Route>
-              <Route path="/form-submit/:formId" render={(props) => <FormSubmitPage {...props} />}></Route>
-              <Route path="/submission-page/:formId" render={(props) => <FormSubmissionsPage {...props} />}></Route>
+              </Route> */}
+              <Route path="/form-submit/:formId" render={(props) => <FormSubmit {...props} />}></Route>
+              <Route path="/submission-page/:formId" render={(props) => <FormSubmissions {...props} />}></Route>
+              {/* <Route path="/submission-page/:formId" render={(props) => <FormSubmissionsPage {...props} />}></Route> */}
               <Redirect to="/form-list" />
             </Switch>
           </div>
