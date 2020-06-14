@@ -10,4 +10,4 @@ Todo:
 * After adding users registration to the app, splitting the app to two parts - the first one is responsible for unregistered users and the whole app for the registered.
 * Adding paginations and lazy loading between pages.
 *Adding context for using passing user data if registered. (https://reactjs.org/docs/context.html)
-* Use suspense inorder to catch the loading (https://www.youtube.com/watch?v=Z78qvpyejQc) instead of using if else in the component.
+* Use suspense inorder to catch the loading (https://www.youtube.com/watch?v=Z78qvpyejQc   https://www.youtube.com/watch?v=r7Gg8Mbrn7I) instead of using if else in the component.
