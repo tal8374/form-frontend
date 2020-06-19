@@ -14,3 +14,4 @@ Todo:
 * Create mivcroservices - form, user, analyser (with elastic search)
 * Add page to show user which forms he sent
 * log user actions, and analyse it with  with elastic search
+* Add login \ register through google \ facebook
