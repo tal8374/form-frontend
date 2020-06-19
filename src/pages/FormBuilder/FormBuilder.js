@@ -47,11 +47,11 @@ const FormBuilder = () => {
     const [mutate] = useMutation(createForm, { onSuccess: () => setHasCreateForm(true) })
 
     const handleSubmit = async () => {
-        if (formInputs.length == 1) {
+        if (formInputs.length === 1) {
             setFormErrorMessage('At least one input must be provided');
             setShowFormNotValidMessage(true);
         }
-        else if(areAllInputNamesAreUnique() == false) {
+        else if(areAllInputNamesAreUnique() === false) {
             setFormErrorMessage('All the input name should be unique');
             setShowFormNotValidMessage(true);
         }
@@ -75,7 +75,7 @@ const FormBuilder = () => {
     }
 
     const areAllInputNamesAreUnique = () => {
-        return new Set(formInputs.slice(1).map(formInput => formInput.inputName)).size == formInputs.length - 1;
+        return new Set(formInputs.slice(1).map(formInput => formInput.inputName)).size === formInputs.length - 1;
     }
 
     const areAllFieldsFilled = () => {

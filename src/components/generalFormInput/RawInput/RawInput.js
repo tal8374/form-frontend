@@ -15,7 +15,7 @@ const RawInput = (props) => {
         return props.value || props.defaultValue || '';
     }
 
-    if (props.isEdible == true) {
+    if (props.isEdible === true) {
         return (
             <React.Fragment>
                 <Form.Field

@@ -8,14 +8,18 @@ import { Label, Table, Message, Loader } from 'semantic-ui-react'
 import { useQuery } from "react-query";
 
 const fetchForms = async () => {
-    const response = await fetch(`${BACKEND_URL}/form`);
+    const response = await fetch(`${BACKEND_URL}/form`, {withCredentials: true});
+    if(response.status == 401) {
+        throw new Error('unAuth')
+    }
     const data = await response.json();
     return data;
+
 }
 
 const FormList = () => {
 
-    const { data, error, isFetching, refetch } = useQuery('fetchForms', fetchForms, { manual: true });
+    const { data, isFetching, error, refetch } = useQuery('fetchForms', fetchForms, { manual: true });
 
     useEffect(() => {
         refetch();
