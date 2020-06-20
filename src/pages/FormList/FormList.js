@@ -8,7 +8,7 @@ import { Label, Table, Message, Loader } from 'semantic-ui-react'
 import { useQuery } from "react-query";
 
 const fetchForms = async () => {
-    const response = await fetch(`${BACKEND_URL}/form`, {withCredentials: true});
+    const response = await fetch(`${BACKEND_URL}/form`, {credentials: 'include'});
     if(response.status == 401) {
         throw new Error('unAuth')
     }
