@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Redirect } from "react-router-dom";
 
 import Header from './components/Header/Header';
 
@@ -29,6 +29,8 @@ const App = () => {
               <AuthRoute path="/form-build" shouldBeLoggedIn={true} component={FormBuilder} />
               <AuthRoute path="/form-submit/:formId" component={FormSubmit} />
               <AuthRoute path="/submission-page/:formId" shouldBeLoggedIn={true} component={FormSubmissions} />
+              <AuthRoute path="/submission-page/:formId" shouldBeLoggedIn={true} component={FormSubmissions} />
+              <Redirect from="/" to="login" />
             </Switch>
           </Container>
 
