@@ -8,6 +8,8 @@ import { BACKEND_URL } from '../../utils/settings'
 
 import { useAuthDispatch } from '../../shared/AuthContext'
 
+import { localStorage } from '../../shared/functions'
+
 const login = async (payload) => {
     const response = await fetch(`${BACKEND_URL}/user/login`, {
         method: 'POST',
@@ -36,8 +38,10 @@ const Login = () => {
     const submitHandler = async (event) => {
         event.preventDefault();
         await mutate({ userName, password });
-        if (!error)
+        if (!error) {
             dispatch({ type: 'login', userName: userName });
+            localStorage.set('user', { userName: userName });
+        }
     }
 
     return (

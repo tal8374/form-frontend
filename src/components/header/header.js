@@ -5,7 +5,9 @@ import PropTypes from 'prop-types';
 import { useAuthState, useAuthDispatch } from '../../shared/AuthContext'
 
 import { useQuery } from "react-query";
-import { BACKEND_URL } from '../../utils//settings'
+import { BACKEND_URL } from '../../utils/settings'
+import { localStorage } from '../../shared/functions'
+
 
 const fetchUserFromCookie = async () => {
     const response = await fetch(`${BACKEND_URL}/user/isLoggedIn`, {
@@ -15,28 +17,29 @@ const fetchUserFromCookie = async () => {
         },
         credentials: 'include',
     });
-    console.log('response', response)
     const data = await response.json();
-    console.log('data', data)
     return data;
-  
-  }
+
+}
 
 const Header = (props) => {
 
     const [activeItem, setActiveItem] = useState(props.location.pathname);
     const state = useAuthState();
     const dispatch = useAuthDispatch();
+    const { data, refetch } = useQuery('fetchUserFromCookie', fetchUserFromCookie, { manual: true });
 
-    const { data, isFetching, error, refetch } = useQuery('fetchUserFromCookie', fetchUserFromCookie, { manual: true });
-  
     useEffect(() => {
-      refetch();
+        let user = localStorage.get('user');
+        console.log(user)
+        if (user != null)
+            dispatch({ type: 'login', userName: user.userName });
+        refetch();
     }, []);
-  
+
     useEffect(() => {
-      if (data && data.userName)
-        dispatch({ type: 'login', userName: data.userName });
+        if (data && data.userName)
+            dispatch({ type: 'login', userName: data.userName });
     }, [data]);
 
     return (
@@ -84,7 +87,7 @@ const Header = (props) => {
                 </Menu.Item>
 
                 {
-                    state.isLoggedIn && <Dropdown text={`Hello ${state.userName}`} pointing className='link item'>
+                    state.isLoggedIn && <Dropdown text={`Hello ${state.userName || ''}`} pointing className='link item'>
                         <Dropdown.Menu>
                             <Dropdown.Item onClick={() => dispatch({ type: 'logout' })}>Logout</Dropdown.Item>
                         </Dropdown.Menu>

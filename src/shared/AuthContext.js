@@ -1,14 +1,17 @@
 import React from 'react'
+import { localStorage } from './functions'
 
 const AuthStateContext = React.createContext()
 const AuthDispatchContext = React.createContext()
 
-function countReducer(state, action) {
+function authReducer(state, action) {
   switch (action.type) {
     case 'login': {
+      localStorage.set('user', { userName: action.userName });
       return { isLoggedIn: true, userName: action.userName }
     }
     case 'logout': {
+      localStorage.remove('user');
       return { isLoggedIn: false }
     }
     default: {
@@ -18,7 +21,7 @@ function countReducer(state, action) {
 }
 
 function AuthProvider({ children }) {
-  const [state, dispatch] = React.useReducer(countReducer, { isLoggedIn: false })
+  const [state, dispatch] = React.useReducer(authReducer, { isLoggedIn: false })
   return (
     <AuthStateContext.Provider value={state}>
       <AuthDispatchContext.Provider value={dispatch}>

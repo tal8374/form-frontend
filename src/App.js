@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Switch } from "react-router-dom";
 
-import './App.css';
 import Header from './components/Header/Header';
 
 import FormList from './pages/FormList/FormList';
@@ -14,14 +13,15 @@ import Register from './pages/Register/Register';
 import { AuthProvider } from './shared/AuthContext'
 import AuthRoute from './shared/ProtectedRoute'
 
-const App = () => {
+import { Container } from 'semantic-ui-react'
 
+const App = () => {
   return (
     <React.Fragment>
       <Router>
         <AuthProvider>
-          <Header></Header>
-          <div className="appContainer container">
+          <Container>
+            <Header></Header>
             <Switch>
               <AuthRoute path="/login" shouldBeLoggedOut={true} component={Login} />
               <AuthRoute path="/register" shouldBeLoggedOut={true} component={Register} />
@@ -30,7 +30,8 @@ const App = () => {
               <AuthRoute path="/form-submit/:formId" component={FormSubmit} />
               <AuthRoute path="/submission-page/:formId" shouldBeLoggedIn={true} component={FormSubmissions} />
             </Switch>
-          </div>
+          </Container>
+
         </AuthProvider>
       </Router>
     </React.Fragment>
