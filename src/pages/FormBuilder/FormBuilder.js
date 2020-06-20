@@ -1,14 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 import { Form, Button, Message } from 'semantic-ui-react'
-
 import { v4 as uuidv4 } from 'uuid';
+import { useMutation } from "react-query";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 import { BACKEND_URL } from '../../utils/settings'
-import { useMutation } from "react-query";
-
 import GeneralFormInput from '../../components/GeneralFormInput/GeneralFormInput';
 import inputEnums from '../../shared/enums';
+
+/**
+ * Moves an item from one list to another list.
+ */
+const move = (source, destination, droppableSource, droppableDestination) => {
+    const sourceClone = Array.from(source);
+    const destClone = Array.from(destination);
+    const [removed] = sourceClone.splice(droppableSource.index, 1);
+
+    destClone.splice(droppableDestination.index, 0, removed);
+
+    const result = {};
+    result[droppableSource.droppableId] = sourceClone;
+    result[droppableDestination.droppableId] = destClone;
+
+    return result;
+};
 
 const getFormNameInput = () => {
     return {
@@ -17,8 +33,8 @@ const getFormNameInput = () => {
         value: 'Form Name',
         label: 'Form Name',
         inputName: 'formName',
-        readOnly: true,
-        isEdible: true,
+        readOnly: false,
+        isEdible: false,
     }
 }
 
@@ -39,20 +55,21 @@ const createForm = async (payload) => {
     return data;
 }
 
-const FormBuilder = () => {
-
+function FormBuilder() {
     const [formInputs, setFormInputs] = useState([getFormNameInput()]);
     const [showFormNotValidMessage, setShowFormNotValidMessage] = useState(false);
     const [formErrorMessage, setFormErrorMessage] = useState('');
     const [hasCreateForm, setHasCreateForm] = useState(false);
     const [mutate] = useMutation(createForm, { onSuccess: () => setHasCreateForm(true) })
 
+    console.log(formInputs)
+
     const handleSubmit = async () => {
         if (formInputs.length === 1) {
             setFormErrorMessage('At least one input must be provided');
             setShowFormNotValidMessage(true);
         }
-        else if(areAllInputNamesAreUnique() === false) {
+        else if (areAllInputNamesAreUnique() === false) {
             setFormErrorMessage('All the input name should be unique');
             setShowFormNotValidMessage(true);
         }
@@ -109,7 +126,8 @@ const FormBuilder = () => {
         formInputs.forEach((formInput) => {
             formInput.isEdible = false;
         });
-        chosenFormInput.isEdible = true;
+        if (chosenFormInput.inputName != 'formName')
+            chosenFormInput.isEdible = true;
         setFormInputs([...formInputs]);
     }
 
@@ -119,28 +137,103 @@ const FormBuilder = () => {
         setShowFormNotValidMessage(false);
     }
 
+    function onDragEnd(result) {
+        const { source, destination } = result;
+
+        // dropped outside the list
+        if (!destination) {
+            return;
+        }
+        const sInd = +source.droppableId;
+        const dInd = +destination.droppableId;
+
+        if (sInd === dInd) {
+            let sourceIndex = source.index + 1;
+            let destinationIndex = destination.index + 1;
+            [formInputs[sourceIndex], formInputs[destinationIndex]] = [formInputs[destinationIndex], formInputs[sourceIndex]];
+            setFormInputs([...formInputs]);
+        } else {
+            const result = move(formInputs[sInd], formInputs[dInd], source, destination);
+            const newState = [...formInputs];
+            newState[sInd] = result[sInd];
+            newState[dInd] = result[dInd];
+
+            setFormInputs(newState.filter(group => group.length));
+        }
+    }
+
+    function getFormComponent(formInput) {
+        return <Form.Group style={{
+            width: '100%',
+            padding: '20px',
+            boxShadow: '2px 5px 4px #888888',
+        }} widths='equal' >
+            <GeneralFormInput
+                key={formInput._id}
+                inputType={formInput.inputType}
+                value={formInput.value}
+                onChangeValue={(value) => updateInput(formInput, value)}
+                label={formInput.label}
+                inputName={formInput.inputName}
+                isEdible={formInput.isEdible}
+                readOnly={formInput.readOnly}
+                required={false}
+                onChangeEdit={(name, value) => onChangeEdit(formInput, name, value)}
+            />
+        </Form.Group>
+    }
+
     return (
         <Form>
-            {
-                formInputs.map((formInput) => {
-                    return (
-                        <Form.Group widths='equal' onClick={() => inputClickHandler(formInput)}>
-                            <GeneralFormInput
-                                key={formInput._id}
-                                inputType={formInput.inputType}
-                                value={formInput.value}
-                                onChangeValue={(value) => updateInput(formInput, value)}
-                                label={formInput.label}
-                                inputName={formInput.inputName}
-                                isEdible={formInput.isEdible}
-                                readOnly={formInput.readOnly}
-                                required={false}
-                                onChangeEdit={(name, value) => onChangeEdit(formInput, name, value)}
-                            />
-                        </Form.Group>
-                    )
-                })
-            }
+            <div style={{ display: "flex" }}>
+                <DragDropContext onDragEnd={onDragEnd}>
+                    <Droppable droppableId={'1'}>
+                        {(provided) => (
+                            <div
+                                ref={provided.innerRef}
+                                style={{ width: '100%' }}
+                                {...provided.droppableProps}
+                            >
+
+                                {
+                                    getFormComponent(formInputs[0])
+                                }
+
+                                {formInputs.slice(1).map((formInput, index) => (
+                                    <Draggable
+                                        key={formInput._id}
+                                        draggableId={formInput._id}
+                                        index={index}
+                                    >
+                                        {(provided) => (
+                                            <div
+                                                ref={provided.innerRef}
+                                                {...provided.draggableProps}
+                                                {...provided.dragHandleProps}
+                                            >
+                                                <div
+                                                    onClick={() => inputClickHandler(formInput)}
+                                                    style={{
+                                                        display: "flex",
+                                                        justifyContent: "space-around",
+                                                        cursor: 'pointer',
+                                                    }}
+                                                >
+
+                                                    {
+                                                        getFormComponent(formInput)
+                                                    }
+                                                </div>
+                                            </div>
+                                        )}
+                                    </Draggable>
+                                ))}
+                                {provided.placeholder}
+                            </div>
+                        )}
+                    </Droppable>
+                </DragDropContext>
+            </div>
 
             <Button
                 fluid
@@ -173,8 +266,9 @@ const FormBuilder = () => {
                     <Message.Header>Form {formInputs[0].value} has been created</Message.Header>
                 </Message>
             }
+
         </Form>
-    )
+    );
 }
 
 export default FormBuilder;

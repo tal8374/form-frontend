@@ -37,10 +37,6 @@ const Header = (props) => {
         if (data && data.userName) {
             dispatch({ type: 'login', userName: data.userName });
         }
-        else {
-            localStorage.remove('user');
-            dispatch({ type: 'logout'});
-        }
     }, [data]);
 
     return (
