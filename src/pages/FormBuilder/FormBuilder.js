@@ -29,6 +29,7 @@ const createForm = async (payload) => {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify({
             formName: payload.formName,
             formInputs: payload.formInputs
