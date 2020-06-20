@@ -8,7 +8,6 @@ import { useQuery } from "react-query";
 import { BACKEND_URL } from '../../utils/settings'
 import { localStorage } from '../../shared/functions'
 
-
 const fetchUserFromCookie = async () => {
     const response = await fetch(`${BACKEND_URL}/user/isLoggedIn`, {
         headers: {
@@ -23,15 +22,12 @@ const fetchUserFromCookie = async () => {
 }
 
 const Header = (props) => {
-
-    const [activeItem, setActiveItem] = useState(props.location.pathname);
     const state = useAuthState();
     const dispatch = useAuthDispatch();
     const { data, refetch } = useQuery('fetchUserFromCookie', fetchUserFromCookie, { manual: true });
 
     useEffect(() => {
         let user = localStorage.get('user');
-        console.log(user)
         if (user != null)
             dispatch({ type: 'login', userName: user.userName });
         refetch();
@@ -52,16 +48,14 @@ const Header = (props) => {
                 {
                     state.isLoggedIn && <Menu.Item
                         name='Form List'
-                        active={activeItem === '/form-list'}
-                        onClick={() => setActiveItem('/form-list')}
+                        active={props.location.pathname === '/form-list'}
                         as={NavLink} exact to="/form-list"
                     />
                 }
                 {
                     state.isLoggedIn && <Menu.Item
                         name='Create Form'
-                        active={activeItem === '/form-build'}
-                        onClick={() => setActiveItem('/form-build')}
+                        active={props.location.pathname === '/form-build'}
                         as={NavLink} exact to="/form-build"
                     />
                 }
@@ -71,16 +65,14 @@ const Header = (props) => {
                     {
                         !state.isLoggedIn && <Menu.Item
                             name='Register'
-                            active={activeItem === '/register'}
-                            onClick={() => setActiveItem('/register')}
+                            active={props.location.pathname === '/register'}
                             as={NavLink} exact to="/register"
                         />
                     }
                     {
                         !state.isLoggedIn && <Menu.Item
                             name='Login'
-                            active={activeItem === '/login'}
-                            onClick={() => setActiveItem('/login')}
+                            active={props.location.pathname === '/login'}
                             as={NavLink} exact to="/login"
                         />
                     }
