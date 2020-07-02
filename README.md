@@ -15,4 +15,4 @@ Todo:
 * Add page to show user which forms he sent
 * log user actions, and analyse it with  with elastic search
 * Add login \ register through google \ facebook
-* Creating the input generic (https://codeburst.io/how-to-use-html5-form-validations-with-react-4052eda9a1d4)
+* Creating the input generic (https://codeburst.io/how-to-use-html5-form-validations-with-react-4052eda9a1d4  https://github.com/jaredpalmer/formik-alicante/blob/master/src/examples/MiniFormik.js)
